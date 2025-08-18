@@ -1,0 +1,15 @@
+- docker
+    $docker ps -a
+    $docker start <containerName>
+    $docker stop <containerName>
+    $docker restart <containerName>
+
+- change access to MySQL (all ip's to user root)
+    $docker exec -it <containerName> bash
+    $mysql -u <user> -p<password>
+
+    > ALTER USER 'root'@'%' IDENTIFIED WITH caching_sha2_password BY '<password>';
+    > GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+    > FLUSH PRIVILEGES;
+
+    $docker restart <containerName>

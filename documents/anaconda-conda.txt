@@ -1,0 +1,18 @@
+# first install anaconda from url website https://www.anaconda.com/download
+# set environmentName
+    $conda --version
+    $conda create --name <environmentName>
+
+# check enviroments created
+    $conda env list
+
+# always activate environmentName before install some librery (important)
+    $conda activate <environmentName>
+
+# remove environmentName created
+    $conda deactivate
+    $conda env remove --name <enviromentenvironmentNameName>
+
+# library installe
+    $pip instal <libreryName>
+    $pip list
