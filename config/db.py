@@ -14,7 +14,6 @@ mysql_obj: object = {
 }
 
 mysql_obj['url_final'] = f'{mysql_obj['url']}{mysql_obj['user']}:{mysql_obj['password']}@{mysql_obj['server']}:{mysql_obj['port']}/{mysql_obj['db']}'
-# mysql_obj['url_final'] = f'{mysql_obj['url']}{mysql_obj['user']}:{mysql_obj['password']}@{mysql_obj['server']}/{mysql_obj['db']}'
 # print(mysql_obj['url_final'])
 
 meta = MetaData()

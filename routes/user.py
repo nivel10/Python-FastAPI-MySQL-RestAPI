@@ -9,4 +9,4 @@ user_router = APIRouter(
 
 @user_router.get('/')
 def get_users():
-    return conn.execute(users.select().fetch_all())
+    return conn.execute(users.select()).fetchall()
