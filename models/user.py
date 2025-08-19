@@ -20,7 +20,7 @@ users = Table(
     ),
     Column(
         'password',
-        String(10),
+        String(256),
     ),
 )
 
