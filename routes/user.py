@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, status, Response
 # from config.db import conn
 from config.db import engine
 from models.user import users
-from schemas.user import User
+from schemas.user import User, UserBeforeAfter
 # from typing import Union
 # from cryptography.fernet import Fernet
 from passlib.context import CryptContext
@@ -20,7 +20,7 @@ user_router = APIRouter(
     tags=['users'],
 )
 
-@user_router.get('/')
+@user_router.get('/', response_model=list[User])
 async def get_users():
     try:
         # print(conn.execute(users.select()).fetchall())
@@ -35,7 +35,7 @@ async def get_users():
             detail=str(ex)
         )
 
-@user_router.post('/')
+@user_router.post('/', response_model=User)
 async def create_user(user: User):
     try:
         user_new: User = user.model_dump()
@@ -61,7 +61,7 @@ async def create_user(user: User):
             detail=str(ex)
         )
     
-@user_router.get('/{id}')
+@user_router.get('/{id}', response_model=User)
 async def get_user(id: str):
     try:
         # user = conn.execute(users.select().where(users.c.id == int(id))).mappings().first()
@@ -80,7 +80,7 @@ async def get_user(id: str):
             detail=str(ex)
         )
     
-@user_router.put('/{id}')
+@user_router.put('/{id}', response_model=UserBeforeAfter)
 async def update_user(id: str, user: User):
     try:
         user_before = await get_user(id=id)
@@ -104,7 +104,7 @@ async def update_user(id: str, user: User):
             detail=str(ex)
         )
 
-@user_router.delete('/{id}')
+@user_router.delete('/{id}', response_model=User)
 # async def delete_user(id: str, response: Response):
 async def delete_user(id: str):
     try:
