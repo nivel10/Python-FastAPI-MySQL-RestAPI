@@ -18,5 +18,10 @@ mysql_obj['url_final'] = f'{mysql_obj['url']}{mysql_obj['user']}:{mysql_obj['pas
 
 meta = MetaData()
 
-engine = create_engine(mysql_obj['url_final'])
-conn = engine.connect()
+engine = create_engine(
+    url=mysql_obj['url_final'],
+    pool_pre_ping=True,
+    future=True,
+)
+
+# conn = engine.connect()
