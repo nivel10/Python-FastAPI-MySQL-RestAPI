@@ -82,7 +82,14 @@ async def get_user(id: str):
 @user_router.put('/{id}')
 async def put_user(id: str, user: User):
     try:
-        pass
+        user = await get_user(id=id)
+        if user:
+            with engine.connect() as conn:
+                conn.execute(users.update().values(
+                    name = user.name,
+                    email = user.email,
+                    password = user.password
+                ))
     except Exception as ex:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
