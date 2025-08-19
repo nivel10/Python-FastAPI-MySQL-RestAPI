@@ -1,3 +1,4 @@
+# from fastapi import APIRouter, HTTPException, status, Response
 from fastapi import APIRouter, HTTPException, status, Response
 # from config.db import conn
 from config.db import engine
@@ -80,16 +81,23 @@ async def get_user(id: str):
         )
     
 @user_router.put('/{id}')
-async def put_user(id: str, user: User):
+async def update_user(id: str, user: User):
     try:
-        user = await get_user(id=id)
-        if user:
+        user_before = await get_user(id=id)
+        if user_before:
             with engine.connect() as conn:
                 conn.execute(users.update().values(
-                    name = user.name,
-                    email = user.email,
-                    password = user.password
+                    name = user.name if None != user.name != '' else user_before.name,
+                    email = user.email if None != user.email != '' else user_before.email,
+                    password = crypt.hash(user.password) if None != user.password != '' else user_before.password,
                 ))
+                conn.commit()
+            user_after = await get_user(id=id)
+        
+        return {
+            'before': user_before,
+            'after': user_after,
+        }
     except Exception as ex:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
